@@ -27,6 +27,13 @@ const {
 
 module.exports = class WireGuard {
 
+  constructor() {
+    this.dataUsageUpdates = {};
+    this.updateInterval = 3600000;
+    this.startPeriodicUpdates();
+    this.previousTransfers = {};
+  }
+
   async __buildConfig() {
     this.__configPromise = Promise.resolve().then(async () => {
       if (!WG_HOST) {
@@ -150,17 +157,19 @@ ${client.preSharedKey ? `PresharedKey = ${client.preSharedKey}\n` : ''
       days: client.days,
       dataLimit: client.dataLimit,
       dataUsage: client.dataUsage,
+      activatedAt: client.activatedAt,
+      remainingDays: client.remainingDays || null, // نمایش remainingDays
       downloadableConfig: 'privateKey' in client,
       persistentKeepalive: null,
       latestHandshakeAt: null,
       transferRx: null,
       transferTx: null,
     }));
-
-    // Loop WireGuard status
+    // گرفتن وضعیت WireGuard
     const dump = await Util.exec('wg show wg0 dump', {
       log: false,
     });
+
     dump
       .trim()
       .split('\n')
@@ -183,12 +192,29 @@ ${client.preSharedKey ? `PresharedKey = ${client.preSharedKey}\n` : ''
         client.latestHandshakeAt = latestHandshakeAt === '0'
           ? null
           : new Date(Number(`${latestHandshakeAt}000`));
-        client.transferRx = Number(transferRx);
-        client.transferTx = Number(transferTx);
         client.persistentKeepalive = persistentKeepalive;
-        const dataUsage = client.transferRx + client.transferTx;
-        client.dataUsage = dataUsage;
-        this.updateClientDataUsage({ clientId: client.id, dataUsage });
+
+        // ذخیره مقادیر قبلی transferRx و transferTx
+        if (!this.previousTransfers[client.id]) {
+          this.previousTransfers[client.id] = {
+            transferRx: Number(transferRx),
+            transferTx: Number(transferTx),
+          };
+        }
+
+        // محاسبه تغییرات جدید در transferRx و transferTx
+        const rxChange = Number(transferRx) - this.previousTransfers[client.id].transferRx;
+        const txChange = Number(transferTx) - this.previousTransfers[client.id].transferTx;
+
+        // به‌روزرسانی مقادیر قبلی
+        const totalChange = rxChange + txChange;
+        const totalChangeInGB = totalChange / 1073741824; // تبدیل بایت به گیگابایت
+
+        // محاسبه حجم مصرف شده بر اساس گیگابایت و ذخیره آن در client.dataUsage
+        client.dataUsage += totalChangeInGB;
+
+        // به‌روزرسانی مصرف داده در سرور
+        this.updateClientDataUsage({ clientId: client.id, dataUsage: client.dataUsage });
       });
 
     return clients;
@@ -266,8 +292,9 @@ Endpoint = ${WG_HOST}:${WG_CONFIG_PORT}`;
       privateKey,
       publicKey,
       preSharedKey,
-      dataLimit,
-      days,
+      dataLimit: Number(dataLimit),
+      days: Number(days),
+      remainingDays: Number(days),
       createdAt: new Date(),
       updatedAt: new Date(),
       activatedAt: new Date(),
@@ -311,7 +338,6 @@ Endpoint = ${WG_HOST}:${WG_CONFIG_PORT}`;
 
   async updateClientName({ clientId, name }) {
     const client = await this.getClient({ clientId });
-
     client.name = name;
     client.updatedAt = new Date();
 
@@ -361,34 +387,127 @@ Endpoint = ${WG_HOST}:${WG_CONFIG_PORT}`;
     const client = await this.getClient({ clientId });
 
     client.dataUsage = dataUsage;
-    client.updatedAt = new Date();
-
     await this.saveConfig();
+  }
+
+  async saveDataUsageUpdates() {
+    const clients = await this.getClients();
+
+    for (const client of clients) {
+      const getclient = await this.getClient({ clientId: client.id });
+
+      // بررسی اینکه activatedAt وجود دارد
+      if (getclient.activatedAt) {
+        const now = new Date();
+        const activatedAt = new Date(getclient.activatedAt);
+
+        // محاسبه تعداد روزهای سپری‌شده
+        const timeDifference = now.getTime() - activatedAt.getTime(); // تفاوت زمانی به میلی‌ثانیه
+        const daysPassed = Math.floor(timeDifference / (1000 * 60 * 60 * 24)); // تبدیل به تعداد روز
+
+        // محاسبه تعداد روزهای باقی‌مانده
+        const remainingDays = getclient.days - daysPassed;
+        getclient.remainingDays = remainingDays > 0 ? remainingDays : 0;
+      } else {
+        console.log(`Client ${getclient.name} does not have an activatedAt date.`);
+      }
+    }
+
+    await this.saveConfig(); // تنها یک بار ذخیره‌سازی
+    this.dataUsageUpdates = {}; // پاک‌سازی داده‌های مصرف
+  }
+
+  startPeriodicUpdates() {
+    setInterval(() => {
+      this.checkClientsStatus();
+      this.saveDataUsageUpdates();
+    }, 3600);
   }
 
   async checkClientsStatus() {
     const clients = await this.getClients();
-    const now = new Date();
-
     for (const client of clients) {
-      // محاسبه روزهای باقی‌مانده
-      const activatedAt = new Date(client.activatedAt);
-      const daysPassed = Math.floor((now - activatedAt) / (1000 * 60 * 60 * 24)); // تعداد روزهای سپری شده
-      const remainingDays = client.days - daysPassed;
+      const getClient = await this.getClient({ clientId: client.id });
 
-      // بررسی اتمام روزهای مجاز
-      if (remainingDays <= 0) {
-        console.log(`کاربر ${client.name} به دلیل اتمام روزهای مجاز غیرفعال شد.`);
-        await this.disableClient({ clientId: client.id });
-        continue; // این کاربر غیرفعال شد، بررسی حجم مصرفی نیاز نیست
+      if (client.remainingDays <= 0) {
+        console.log(`کاربر ${getClient.name} به دلیل اتمام روزهای مجاز غیرفعال شد.`);
+        await this.disableClient({ clientId: getClient.id });
+        continue;
       }
 
-      // بررسی مصرف داده
-      if (client.dataLimit && client.dataUsage >= client.dataLimit) {
-        console.log(`کاربر ${client.name} به دلیل اتمام حجم مصرفی غیرفعال شد.`);
-        await this.disableClient({ clientId: client.id });
+      const convertGBtoBytes = (gigabytes) => Number(gigabytes) * 1073741824;
+      const dataLimitInBytes = convertGBtoBytes(getClient.dataLimit);
+
+      if (getClient.dataLimit && getClient.dataUsage >= dataLimitInBytes) {
+        await this.disableClient({ clientId: getClient.id });
       }
     }
+  }
+
+  async getClientStats() {
+    const clients = await this.getClients(); // دریافت تمام کاربران
+
+    const activeClients = clients.filter((client) => client.enabled).length; // تعداد کاربران فعال
+    const inactiveClients = clients.filter((client) => !client.enabled).length; // تعداد کاربران غیرفعال
+    const totalClients = clients.length; // تعداد کل کاربران
+    const totalDataUsage = clients.reduce((total, client) => {
+      return total + client.dataUsage; // جمع مصرف داده‌ها
+    }, 0);
+
+    const usageStats = {
+      hourly: totalDataUsage / 3600000, // مصرف داده کل در یک ساعت
+      daily: totalDataUsage / 86400000, // مصرف داده کل در یک روز
+      weekly: totalDataUsage / 604800000, // مصرف داده کل در یک هفته
+      monthly: totalDataUsage / 2592000000, // مصرف داده کل در یک ماه
+    };
+    // ده کاربر با بیشترین مصرف داده
+    const topClients = clients
+      .filter((client) => client.enabled) // فقط کاربران فعال
+      .sort((a, b) => b.dataUsage - a.dataUsage) // مرتب‌سازی بر اساس مصرف داده
+      .slice(0, 10) // انتخاب ده کاربر برتر
+      .map((client) => ({
+        name: client.name,
+        days: client.days,
+        remainingDays: client.remainingDays,
+        dataUsage: client.dataUsage,
+        terrafic: client.dataLimit,
+      }));
+    const inactiveClientDetails = clients
+      .filter((client) => !client.enabled) // فقط کاربران غیرفعال
+      .map((client) => ({
+        name: client.name,
+        dataUsage: client.dataUsage,
+        remainingDays: client.remainingDays,
+      }));
+    return {
+      activeClients,
+      inactiveClients,
+      totalClients,
+      topClients,
+      usageStats,
+      inactiveClientDetails,
+    };
+  }
+
+  async updateClient({
+    clientId,
+    clientEditName,
+    clientEditDays,
+    clientEditDataLimit,
+  }) {
+    // دریافت کلاینت بر اساس clientId
+    const client = await this.getClient({ clientId });
+
+    // به‌روزرسانی مشخصات کلاینت
+    client.name = clientEditName;
+    client.dataLimit = clientEditDataLimit;
+    client.days = clientEditDays;
+    client.updatedAt = new Date();
+
+    // ذخیره تغییرات
+    await this.saveConfig();
+
+    return client; // بازگرداندن کلاینت برای تایید موفقیت‌آمیز بودن عملیات
   }
 
 };

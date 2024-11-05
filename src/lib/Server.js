@@ -234,6 +234,73 @@ module.exports = class Server {
         const { address } = await readBody(event);
         await WireGuard.updateClientAddress({ clientId, address });
         return { success: true };
+      }))
+      .put('/api/wireguard/client/:clientId/update', defineEventHandler(async (event) => {
+        const clientId = getRouterParam(event, 'clientId');
+
+        // اعتبارسنجی clientId برای جلوگیری از حملات پروتوتایپ
+        if (clientId === '__proto__' || clientId === 'constructor' || clientId === 'prototype') {
+          throw createError({ status: 403 });
+        }
+
+        // خواندن داده‌های جدید کلاینت از بدنه درخواست
+        const { clientEditName, clientEditDays, clientEditDataLimit } = await readBody(event);
+
+        try {
+          // فراخوانی تابع به‌روزرسانی کلاینت
+          const updatedClient = await WireGuard.updateClient({
+            clientId,
+            clientEditName,
+            clientEditDays,
+            clientEditDataLimit,
+          });
+
+          // بازگرداندن اطلاعات کلاینت به‌روزرسانی شده برای تایید موفقیت
+          return { success: true, client: updatedClient };
+        } catch (error) {
+          throw createError({ status: 500, message: error.message });
+        }
+      }))
+      .get('/api/wireguard/client/stats', defineEventHandler(async () => {
+        const stats = await WireGuard.getClientStats(); // دریافت آمار کاربران
+        return stats;
+      }))
+      .get('/api/wireguard/client/data-usage', defineEventHandler(async () => {
+        const clients = await WireGuard.getClients();
+        const now = Date.now();
+        const oneHourAgo = now - 3600000; // یک ساعت پیش
+        const oneDayAgo = now - 86400000; // یک روز پیش
+        const threeDaysAgo = now - 259200000; // سه روز پیش
+        const oneWeekAgo = now - 604800000; // یک هفته پیش
+        const oneMonthAgo = now - 2592000000; // یک ماه پیش
+
+        const usageStats = {
+          oneHour: 0,
+          oneDay: 0,
+          threeDays: 0,
+          oneWeek: 0,
+          oneMonth: 0,
+          topTen: [],
+        };
+
+        clients.forEach((client) => {
+          usageStats.oneHour += (client.dataUsage && client.lastUpdated >= oneHourAgo) ? client.dataUsage : 0;
+          usageStats.oneDay += (client.dataUsage && client.lastUpdated >= oneDayAgo) ? client.dataUsage : 0;
+          usageStats.threeDays += (client.dataUsage && client.lastUpdated >= threeDaysAgo) ? client.dataUsage : 0;
+          usageStats.oneWeek += (client.dataUsage && client.lastUpdated >= oneWeekAgo) ? client.dataUsage : 0;
+          usageStats.oneMonth += (client.dataUsage && client.lastUpdated >= oneMonthAgo) ? client.dataUsage : 0;
+        });
+
+        // پیدا کردن ۱۰ کاربر با بیشترین مصرف داده
+        usageStats.topTen = clients
+          .sort((a, b) => b.dataUsage - a.dataUsage)
+          .slice(0, 10)
+          .map((client) => ({
+            name: client.name,
+            dataUsage: client.dataUsage,
+          }));
+
+        return usageStats;
       }));
 
     const safePathJoin = (base, target) => {

@@ -85,18 +85,39 @@ class API {
       path: '/wireguard/client',
     }).then((clients) => {
       const processedClients = clients.map((client) => {
+        const toIranTime = (date) => {
+          return new Intl.DateTimeFormat('fa-IR', {
+            timeZone: 'Asia/Tehran',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+          }).format(new Date(date));
+        };
+
+        const activatedAtIran = client.activatedAt
+          ? toIranTime(client.activatedAt)
+          : null;
+
+        // Console log for activatedAt in Iran time
+
         return {
           ...client,
-          createdAt: new Date(client.createdAt),
-          updatedAt: new Date(client.updatedAt),
+          createdAt: client.createdAt,
+          updatedAt: client.updatedAt,
           latestHandshakeAt: client.latestHandshakeAt !== null
-            ? new Date(client.latestHandshakeAt)
+            ? client.latestHandshakeAt
             : null,
+          activatedAt: activatedAtIran,
           terrafic: client.dataLimit,
           expireDays: client.days,
           dataUsage: client.dataUsage,
+          remainingDays: client.remainingDays,
         };
       });
+
       return processedClients;
     });
   }
@@ -151,6 +172,67 @@ class API {
       method: 'put',
       path: '/wireguard/restore',
       body: { file },
+    });
+  }
+
+  async getClientStats() {
+    return this.call({
+      method: 'get',
+      path: '/wireguard/client/stats',
+    });
+  }
+
+  async getClientDataUsage() {
+    return this.call({
+      method: 'get',
+      path: '/wireguard/client/data-usage',
+    });
+  }
+
+  async editClient({ clientId, data }) {
+    return this.call({
+      method: 'put',
+      path: `/wireguard/client/${clientId}`,
+      body: data,
+    });
+  }
+
+  async resetClientUsage({ clientId }) {
+    return this.call({
+      method: 'post',
+      path: `/wireguard/client/${clientId}/reset-usage`,
+    });
+  }
+
+  async getClientDetails({ clientId }) {
+    console.log('clientId', clientId);
+    return this.call({
+      method: 'get',
+      path: `/wireguard/client/${clientId}/details`,
+    });
+  }
+
+  async getClientQRCode({ clientId }) {
+    return this.call({
+      method: 'get',
+      path: `/wireguard/client/${clientId}/qr-code`,
+    });
+  }
+
+  async updateClient({
+    clientId,
+    clientEditName,
+    clientEditDays,
+    clientEditDataLimit,
+  }) {
+    return this.call({
+      method: 'put',
+      path: `/wireguard/client/${clientId}/update`,
+      body: {
+        clientEditName,
+        clientEditDays,
+        clientEditDataLimit,
+      },
     });
   }
 

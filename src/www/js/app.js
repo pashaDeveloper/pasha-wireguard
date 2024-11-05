@@ -53,12 +53,15 @@ new Vue({
     authenticating: false,
     password: null,
     requiresPassword: null,
-
-    clients: null,
+    clients: [],
     clientsPersist: {},
-    clientDays: null, // تعریف متغیر clientDays
+    clientDays: null,
+    clientEditDays: null,
     clientDataLimit: null, // تعریف متغیر clientDataLimit
+    clientEditDataLimit: null,
+    clientEditId: null,
     clientDelete: null,
+    clientInfo: null,
     clientCreate: null,
     clientCreateName: '',
     clientEditName: null,
@@ -66,12 +69,15 @@ new Vue({
     clientEditAddress: null,
     clientEditAddressId: null,
     qrcode: null,
-
+    sendTestMessage: null,
     currentRelease: null,
     latestRelease: null,
-
+    clientEdit: null,
     uiTrafficStats: false,
-
+    expiredClients: 0,
+    onlineClients: 0,
+    inactiveClients: [],
+    topDataUsers: [],
     uiChartType: 0,
     uiShowCharts: localStorage.getItem('uiShowCharts') === '1',
     uiTheme: localStorage.theme || 'auto',
@@ -159,6 +165,26 @@ new Vue({
     },
   },
   methods: {
+    sendTestMessage(client) {
+      // پیغام را به کنسول ارسال کنید
+
+      // اگر می‌خواهید پیغامی به یک عنصر خاص در index.html بفرستید
+      const messageElement = document.getElementById('message'); // فرض کنید یک عنصر با id="message" دارید
+      if (messageElement) {
+        messageElement.innerText = `پیغام جدید برای ${client.name} از Vue!`;
+      }
+    },
+    sendSimpleMessage() {
+      // پیغام را به کنسول ارسال کنید
+      console.log('پیغام ساده ارسال شد!');
+
+      // پیغام را در عنصر message نمایش دهید
+      const messageElement = document.getElementById('message');
+      if (messageElement) {
+        messageElement.innerText = 'این یک پیغام ساده از Vue است!';
+      }
+    },
+
     dateTime: (value) => {
       return new Intl.DateTimeFormat(undefined, {
         year: 'numeric',
@@ -175,7 +201,7 @@ new Vue({
 
       const clients = await this.api.getClients();
       this.clients = clients.map((client) => {
-        if (client.name.includes('@') && client.name.includes('.')) {
+        if (client?.name?.includes('@') && client.name.includes('.')) {
           client.avatar = `https://gravatar.com/avatar/${sha256(client.name.toLowerCase().trim())}.jpg`;
         }
 
@@ -275,10 +301,49 @@ new Vue({
       if (!name) return;
       this.api.createClient({ name, dataLimit, days })
         .then((response) => {
-          console.log('Client created successfully:', response);
         })
         .catch((err) => alert(err.message || err.toString()))
         .finally(() => this.refresh().catch(console.error));
+    },
+    showQrc(client) {
+      // ذخیره اطلاعات کاربر
+      this.clientName = client.name; // نام کاربر
+      this.clientDataLimit = client.dataLimit; // محدودیت داده کاربر
+      this.clientDays = client.days; // تعداد روزها کاربر
+
+      // ساختن URL برای QR Code
+      this.qrcode = `./api/wireguard/client/${client.id}/qrcode.svg`;
+    },
+    clientEdit(client) {
+      // Logic to open the edit modal with client details
+      this.clientEditName = client.name; // or other editable fields
+      this.clientEditNameId = client.id;
+      // Additional modal handling logic...
+    },
+    resetClientTraffic(client) {
+      // Logic to reset traffic and update activation date
+      client.dataUsage = 0; // Reset usage
+      client.activatedAt = new Date().toISOString(); // Set today's date
+      // Call API to save changes...
+    },
+    linkToClientDetails() {
+      const clientId = '12345'; // اطمینان حاصل کنید که این مقدار درست است
+      // بارگذاری اطلاعات کاربر از API
+      this.api.getClientDetails(clientId) // فرض می‌کنیم که این تابع جزئیات کاربر را برمی‌گرداند
+        .then((clientDetails) => {
+          // در اینجا می‌توانید با اطلاعات کاربر کار کنید
+          // مثلاً ذخیره‌سازی اطلاعات در متغیرها برای استفاده در صفحه جزئیات
+          this.qrcode = clientDetails.qrc; // فرض بر این است که clientDetails شامل qrc است
+          this.clientEditName = clientDetails.name; // و سایر اطلاعات
+          this.clientDataLimit = clientDetails.dataLimit;
+          this.clientDays = clientDetails.days;
+
+          // سپس به صفحه جزئیات کاربر بروید
+          window.location.href = `/client/${client.id}`;
+        })
+        .catch((err) => {
+          alert(err.message || err.toString());
+        });
     },
     deleteClient(client) {
       this.api.deleteClient({ clientId: client.id })
@@ -302,6 +367,20 @@ new Vue({
     },
     updateClientAddress(client, address) {
       this.api.updateClientAddress({ clientId: client.id, address })
+        .catch((err) => alert(err.message || err.toString()))
+        .finally(() => this.refresh().catch(console.error));
+    },
+    updateClient() {
+      console.log('clientEditId', this.clientEditId);
+      console.log('clientEditName', this.clientEditName);
+      console.log('clientEditDays', this.clientEditDays);
+      console.log('clientEditDataLimit', this.clientEditDataLimit);
+      this.api.updateClient({
+        clientId: this.clientEditId,
+        clientEditName: this.clientEditName,
+        clientEditDays: this.clientEditDays,
+        clientEditDataLimit: this.clientEditDataLimit,
+      })
         .catch((err) => alert(err.message || err.toString()))
         .finally(() => this.refresh().catch(console.error));
     },
@@ -352,6 +431,7 @@ new Vue({
   mounted() {
     this.prefersDarkScheme.addListener(this.handlePrefersChange);
     this.setTheme(this.uiTheme);
+    console.log(this.$router ? 'Router is available' : 'Router is not available');
 
     this.api = new API();
     this.api.getSession()

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" prefix="og: http://ogp.me/ns#">
+<html lang="en" prefix="og: http://ogp.me/ns#" >
 
 <head>
   <title>گذرگاه</title>
@@ -48,20 +48,168 @@
   .line-chart .apexcharts-svg{
     transform: translateY(3px);
   }
+  .progress-bars-container {
+  width:50%;
+  margin-top: 20px;
+}
+
+.progress-bar {
+  margin-bottom: 20px;
+}
+
+.progress-bar-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.progress-bar-background {
+  background-color: #e0e0e0;
+  height:5px;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 10px;
+}
+
+.progress-bar-fill.days {
+  background-color: #4caf50; /* رنگ سبز برای روزها */
+}
+
+.progress-bar-fill.data {
+  background-color: #2196f3; /* رنگ آبی برای حجم */
+}
+.custom-container {
+    display: inline-block; /* نمایش به صورت بلاک درون خطی */
+    overflow: hidden; /* مخفی کردن محتویات اضافی */
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1); /* سایه */
+    transition: all 0.3s ease; /* انیمیشن انتقال */ /* حاشیه عمودی */
+    max-width: 32rem; /* حداکثر عرض */
+    width: 100%; /* عرض کامل */
+    border: 1px solid #3b82f6; /* حاشیه آبی */
+    border-radius: 0.5rem; /* گرد کردن گوشه‌ها */
+    background-color: #bfdbfe; /* پس‌زمینه آبی روشن */
+    color: #3b82f6; /* رنگ متن آبی */
+    text-align: center;
+}
+.progress-label {
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  margin-top: 5px;
+  color: #555;
+}
+.custom-container {
+    display: inline-block; /* نمایش به صورت بلاک درون خطی */
+    overflow: hidden; /* مخفی کردن محتویات اضافی */
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1); /* سایه */
+    transition: all 0.3s ease; /* انیمیشن انتقال */
+    max-width: 32rem; /* حداکثر عرض */
+    width: 100%; /* عرض کامل */
+    border: 1px solid #3b82f6; /* حاشیه آبی */
+    border-radius: 0.5rem; /* گرد کردن گوشه‌ها */
+    background-color: #bfdbfe; /* پس‌زمینه آبی روشن */
+    color: #3b82f6; /* رنگ متن آبی */
+    text-align: center;
+}
+.progress-label {
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    margin-top: 5px;
+    color: #555;
+}
+.custom-container {
+    display: inline-block; /* نمایش به صورت بلاک درون خطی */
+    overflow: hidden; /* مخفی کردن محتویات اضافی */
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1); /* سایه */
+    transition: all 0.3s ease; /* انیمیشن انتقال */
+    max-width: 32rem; /* حداکثر عرض */
+    width: 100%; /* عرض کامل */
+    border: 1px solid #3b82f6; /* حاشیه آبی */
+    border-radius: 0.5rem; /* گرد کردن گوشه‌ها */
+    background-color: #bfdbfe; /* پس‌زمینه آبی روشن */
+    color: #3b82f6; /* رنگ متن آبی */
+    text-align: center;
+}
+.progress-label {
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    margin-top: 5px;
+    color: #555;
+}
+.charts-container {
+    display: flex;
+    flex-direction: column; /* به صورت ستونی در حالت کوچک */
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.chart-container {
+    display: flex; /* برای قرار دادن دو چارت در یک سطر */
+    flex-direction: row; /* چارت‌ها به صورت افقی قرار می‌گیرند */
+    justify-content: space-between; /* فاصله بین چارت‌ها */
+    margin-bottom: 1rem; /* فاصله بین سطرها */
+}
+
+.chart {
+    flex: 1; /* ارتفاع یکسان برای هر دو چارت */
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    background-color: white;
+    margin-right: 1rem; /* فاصله بین چارت‌ها */
+}
+
+.chart:last-child {
+    margin-right: 0; /* حذف مارجین راست برای آخرین چارت */
+}
+
+/* استایل ریسپانسیو */
+@media (max-width: 1023px) {
+    .charts-container {
+        flex-direction: column; /* به صورت ستونی در حالت کوچک */
+    }
+
+    .chart {
+        margin-bottom: 1rem; /* فاصله بین چارت‌ها در حالت کوچک */
+        margin-right: 0; /* حذف مارجین راست در حالت کوچک */
+    }
+
+    .chart-container {
+        flex-direction: column; /* چارت‌ها در حالت کوچک به صورت ستونی قرار می‌گیرند */
+    }
+}
+
+
 </style>
 
 <body class="material-theme">
 
   <div id="app">
-	<article class="hero-banner">
-		<section class="hero-banner__text-container">
-		<h1 class="hero-banner__header">Pasha developer</h1>
-		</section>
-		<img draggable="false" class="hero-banner__img hero-banner__img--first-image" src="./img/primary-min.jpg" alt="First hero banner primary image">
-	</article>
+    <article class="hero-banner">
+      <div class="charts-container">
+        <div class="chart-container">
+          <div id="inactiveClientsChart" class="chart bg-white p-3 shadow-md rounded-lg"></div> <!-- چارت دایره‌ای -->
+          <div id="dataUsageChart" class="chart bg-white p-3 shadow-md rounded-lg"></div>
+        </div>
+        <div class="chart-container">
+            <div id="pieChart" class="chart bg-white p-3 shadow-md rounded-lg"></div> <!-- چارت دایره‌ای -->
+            <div id="barChart" class="chart bg-white p-3 shadow-md rounded-lg"></div> 
+        </div>
+      </div>
+  </article>
+  
     <div v-cloak class="container mx-auto max-w-3xl px-3 md:px-0 mt-4 xs:mt-6">
       <div v-if="authenticated === true">
-        <div class="flex flex-col-reverse xxs:flex-row flex-auto items-center items-end gap-3">
+        <div class="flex flex-col-reverse xxs:flex-row flex-auto  items-end gap-3">
           <!-- <h1 class="text-4xl dark:text-neutral-200 font-medium flex-grow self-start mb-4">
             <img src="./img/logo.png" width="32" class="inline align-middle dark:bg mr-2" /><span class="align-middle">WireGuard</span>
           </h1> -->
@@ -149,7 +297,7 @@
                 <span class="max-md:hidden text-sm">{{$t("backup")}}</span>
               </a>
               <!-- New client -->
-              <button @click="clientCreate = true; clientCreateName = '';"
+              <button @click="clientCreate = true; clientCreateName = ''; clientDays = 0; clientDataLimit = 0;"
                 class="material-button material-button--filled-primary py-2 px-4 inline-flex items-center transition">
                 <svg class="w-4 md:mr-2" inline xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                   stroke="currentColor">
@@ -187,175 +335,186 @@
               </div>
 
               <div class="relative py-3 md:py-5 px-3 z-10 flex flex-col sm:flex-row justify-between gap-3">
-                <div class="flex gap-3 md:gap-4 w-full items-center ">
+                <div class="flex gap-3 md:gap-4 w-full items-center justify-between">
 
-                  <!-- Avatar -->
-                  <div class="h-10 w-10 mt-2 self-start rounded-full bg-gray-50 relative">
-                    <svg class="w-6 m-2 text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                      fill="currentColor">
-                      <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                        clip-rule="evenodd" />
-                    </svg>
-                    <img v-if="client.avatar" :src="client.avatar" class="w-10 rounded-full absolute top-0 left-0" />
-
-                    <div
-                      v-if="client.latestHandshakeAt && ((new Date() - new Date(client.latestHandshakeAt) < 1000 * 60 * 10))">
-                      <div
-                        class="animate-ping w-4 h-4 p-1 material-colored--tertiary rounded-full absolute -bottom-1 -right-1">
+                  <div class="flex items-start gap-4">
+                    <!-- Avatar -->
+                    <div class="h-10 w-10 mt-2 rounded-full bg-gray-50 relative">
+                      <router-link :to="`/user/${client.id}`" class="absolute inset-0 flex items-center justify-center">
+                        <svg class="w-6 m-2 text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                        </svg>
+                        <img v-if="client.avatar" :src="client.avatar" class="w-10 rounded-full absolute top-0 left-0" />
+                      </router-link>
+                      <div v-if="client.latestHandshakeAt && ((new Date() - new Date(client.latestHandshakeAt) < 1000 * 60 * 10))">
+                        <div class="animate-ping w-4 h-4 p-1 material-colored--tertiary rounded-full absolute -bottom-1 -right-1"></div>
+                        <div class="w-2 h-2 material-colored--tertiary rounded-full absolute bottom-0 right-0"></div>
                       </div>
-                      <div class="w-2 h-2 material-colored--tertiary rounded-full absolute bottom-0 right-0"></div>
                     </div>
-                  </div>
-
-                  <!-- Name & Info -->
-                  <div class="flex flex-col xxs:flex-row w-full gap-2">
-
-                    <!-- Name -->
-                    <div class="flex flex-col flex-grow gap-1">
-                      <div class="group text-sm md:text-base"
-                        :title="$t('createdOn') + dateTime(new Date(client.createdAt))">
-                        <!-- Show -->
-                        <div class="flex justify-between w-full">
-                          <div class="flex flex-col flex-grow gap-1">
-                            <div class="group text-sm md:text-base"
-                                 :title="$t('createdOn') + dateTime(new Date(client.createdAt))">
-                              <!-- Name -->
-                              <input v-show="clientEditNameId === client.id" v-model="clientEditName"
-                                     v-on:keyup.enter="updateClientName(client, clientEditName); clientEditName = null; clientEditNameId = null;"
-                                     v-on:keyup.escape="clientEditName = null; clientEditNameId = null;"
-                                     :ref="'client-' + client.id + '-name'"
-                                     class="rounded px-1 border-2 border-gray-100 dark:border-neutral-600 focus:border-gray-200 dark:focus:border-neutral-500 dark:placeholder:text-neutral-500 outline-none w-30" />
-                              <span v-show="clientEditNameId !== client.id"
-                                    class="border-t-2 border-b-2 border-transparent">{{client.name}}</span>
-                            </div>
-                          </div>
-                        
-                          <div class="flex flex-col items-end">
-                            <p class="text-sm text-gray-600 dark:text-gray-300">
-                              حجم: {{ bytes(client.terrafic) }}</p>
-                            <p class="text-sm text-gray-600 dark:text-gray-300">زمان:
-                               {{ client.expireDays }} روز</p>
-                               <p class="text-sm text-gray-600 dark:text-gray-300">حجم مصرف شده:
-                                {{ client.dataUsage }} گیگ </p>
-                              
-                          </div>
-                        </div>
-                        <!-- Edit -->
+                  
+                    <!-- Name & Info -->
+                    <div class="flex flex-col gap-1">
+                      <!-- Name -->
+                      <div class="group text-sm md:text-base" :title="$t('createdOn') + dateTime(new Date(client.createdAt))">
+                        <input v-show="clientEditNameId === client.id" v-model="clientEditName"
+                          v-on:keyup.enter="updateClientName(client, clientEditName); clientEditName = null; clientEditNameId = null;"
+                          v-on:keyup.escape="clientEditName = null; clientEditNameId = null;" :ref="'client-' + client.id + '-name'"
+                          class="rounded px-1 border-2 border-gray-100 dark:border-neutral-600 focus:border-gray-200 dark:focus:border-neutral-500 dark:placeholder:text-neutral-500 outline-none w-30" />
+                        <span v-show="clientEditId !== client.id" class="border-t-2 border-b-2 border-transparent">{{client.name}}</span>
                         <span v-show="clientEditNameId !== client.id"
                           @click="clientEditName = client.name; clientEditNameId = client.id; setTimeout(() => $refs['client-' + client.id + '-name'][0].select(), 1);"
                           class="cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity">
-                          <svg xmlns="http://www.w3.org/2000/svg"
-                            class="h-4 w-4 inline align-middle opacity-25 hover:opacity-100" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline align-middle opacity-25 hover:opacity-100"
+                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                               d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                           </svg>
                         </span>
                       </div>
+                  
                       <!-- Address -->
-                      <span class="group block md:inline-block pb-1 md:pb-0">
-
-                        <!-- Show -->
+                      <div class="group text-sm">
                         <input v-show="clientEditAddressId === client.id" v-model="clientEditAddress"
                           v-on:keyup.enter="updateClientAddress(client, clientEditAddress); clientEditAddress = null; clientEditAddressId = null;"
-                          v-on:keyup.escape="clientEditAddress = null; clientEditAddressId = null;"
-                          :ref="'client-' + client.id + '-address'"
+                          v-on:keyup.escape="clientEditAddress = null; clientEditAddressId = null;" :ref="'client-' + client.id + '-address'"
                           class="rounded border-2 material-basic--secondary material-outline outline-none w-20" />
+                        <span v-show="clientEditAddressId !== client.id" class="inline-block border-t-2 border-b-2 border-transparent">{{client.address}}</span>
                         <span v-show="clientEditAddressId !== client.id"
-                          class="inline-block border-t-2 border-b-2 border-transparent">{{client.address}}</span>
-
-                          <!-- Edit -->
-                          <span v-show="clientEditAddressId !== client.id"
-                            @click="clientEditAddress = client.address; clientEditAddressId = client.id; setTimeout(() => $refs['client-' + client.id + '-address'][0].select(), 1);"
-                            class="cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                              class="h-4 w-4 inline align-middle opacity-25 hover:opacity-100" fill="none"
-                              viewBox="0 0 24 24" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                            </svg>
-                          </span>
-                        </span>
-                        <!-- Inline Transfer TX -->
-                        <span v-if="!uiTrafficStats && client.transferTx" class="whitespace-nowrap" :title="$t('totalDownload') + bytes(client.transferTx)">
-                          ·
-                          <svg class="align-middle h-3 inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd"
-                              d="M16.707 10.293a1 1 0 010 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l4.293-4.293a1 1 0 011.414 0z"
-                              clip-rule="evenodd" />
+                          @click="clientEditAddress = client.address; clientEditAddressId = client.id; setTimeout(() => $refs['client-' + client.id + '-address'][0].select(), 1);"
+                          class="cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline align-middle opacity-25 hover:opacity-100"
+                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                           </svg>
-                          {{client.transferTxCurrent | bytes}}/s
-                        </span>
-                        
-                        <!-- Inline Transfer RX -->
-                        <span v-if="!uiTrafficStats && client.transferRx" class="whitespace-nowrap" :title="$t('totalUpload') + bytes(client.transferRx)">
-                          ·
-                          <svg class="align-middle h-3 inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd"
-                              d="M3.293 9.707a1 1 0 010-1.414l6-6a1 1 0 011.414 0l6 6a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L4.707 9.707a1 1 0 01-1.414 0z"
-                              clip-rule="evenodd" />
-                          </svg>
-                          {{client.transferRxCurrent | bytes}}/s
-                        </span>
-                        <!-- Last seen -->
-                        <span class="text-gray-400 dark:text-neutral-500 whitespace-nowrap" v-if="client.latestHandshakeAt"
-                          :title="$t('lastSeen') + dateTime(new Date(client.latestHandshakeAt))">
-                          {{!uiTrafficStats ? " · " : ""}}{{new Date(client.latestHandshakeAt) | timeago}}
                         </span>
                       </div>
-                    </div>
-
-                    <!-- Info -->
-                    <div v-if="uiTrafficStats"
-                      class="flex gap-2 items-center shrink-0 text-gray-400 dark:text-neutral-400 text-xs mt-px justify-end">
-
-                      <!-- Transfer TX -->
-                      <div class="min-w-20 md:min-w-24" v-if="client.transferTx">
-                        <span class="flex gap-1" :title="$t('totalDownload') + bytes(client.transferTx)">
-                          <svg class="align-middle h-3 inline mt-0.5" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd"
-                              d="M16.707 10.293a1 1 0 010 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l4.293-4.293a1 1 0 011.414 0z"
-                              clip-rule="evenodd" />
-                          </svg>
-                          <div>
-                            <span class="text-gray-700 dark:text-neutral-200">{{client.transferTxCurrent |
-                              bytes}}/s</span>
-                            <!-- Total TX -->
-                            <br><span class="font-regular" style="font-size:0.85em">{{bytes(client.transferTx)}}</span>
-                           
-
-                          </div>
-                        </span>
-
-                      </div>
-                     
-                      <!-- Transfer RX -->
-                      <div class="min-w-20 md:min-w-24" v-if="client.transferRx">
-                        <span class="flex gap-1" :title="$t('totalUpload') + bytes(client.transferRx)">
-
-                          <svg class="align-middle h-3 inline mt-0.5" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd"
-                              d="M3.293 9.707a1 1 0 010-1.414l6-6a1 1 0 011.414 0l6 6a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L4.707 9.707a1 1 0 01-1.414 0z"
-                              clip-rule="evenodd" />
-                          </svg>
-                          <div>
-                            <span class="text-gray-700 dark:text-neutral-200">{{client.transferRxCurrent |
-                              bytes}}/s</span>
-                            <!-- Total RX -->
-                            <br><span class="font-regular" style="font-size:0.85em">{{bytes(client.transferRx)}}</span>
-                          </div>
-                        </span>
-                      </div>
-
                     </div>
                   </div>
-                  <!-- </div> --> <!-- <div class="flex flex-grow items-center"> -->
-                </div>
+                  
+                  
 
-                <div class="flex items-center justify-end">
+                    <!-- Info -->
+                  
+                     <div class="progress-bars-container flex flex-col space-y-4 w-full">
+                    <!-- نوار پیشرفت روزها -->
+                    <div class="progress-bar w-full ">
+                      <div class="progress-bar-info flex justify-between text-sm mb-1">
+                        <span class="start-date">{{ client.activatedAt }}</span>
+                        <span class="end-date">{{ client.expireDays }} روز</span>
+                      </div>
+                      <div class="progress-bar-background h-4 bg-gray-200 rounded">
+                        <div class="progress-bar-fill days h-4 bg-blue-500 rounded" :style="{ width: ((client.remainingDays / client.expireDays) * 100) + '%' }"></div>
+                      </div>
+                      <span class="progress-label text-sm"> {{ client.remainingDays }} روز</span>
+                    </div>
+                  
+                    <!-- نوار پیشرفت حجم -->
+                    <div class="progress-bar w-full">
+                      <div class="progress-bar-info flex justify-between text-sm mb-1">
+                        <span class="start-data-usage">{{ client.dataUsage }}</span>
+                        <span class="end-data-usage">{{ client.terrafic }} گیگ</span>
+                      </div>
+                      <div class="progress-bar-background h-4 bg-gray-200 rounded">
+                        <div class="progress-bar-fill data h-4 bg-red-500 rounded" :style="{ width: ((client.dataUsage / client.terrafic) * 100) + '%' }"></div>
+                      </div>
+                      <span class="progress-label text-sm"> {{ client.dataUsage }}</span>
+                    </div>
+                  </div>
+                </div>
+              <!-- </div> --> <!-- <div class="flex flex-grow items-center"> -->
+                
+                </div>
+                <div class="overflow-x-auto w-full">
+                  
+                  
+                  
+                </div>
+                <div class="flex items-center justify-between flex-row-reverse">
+                  <div v-if="uiTrafficStats"
+                  class="flex gap-2 items-center shrink-0 text-gray-400 dark:text-neutral-400 text-xs mt-px ">
+  
+                  <!-- Transfer TX -->
+                  <div class="min-w-20 md:min-w-24" v-if="client.transferTx">
+                    <span class="flex gap-1" :title="$t('totalDownload') + bytes(client.transferTx)">
+                      <svg class="align-middle h-3 inline mt-0.5" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                          d="M16.707 10.293a1 1 0 010 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l4.293-4.293a1 1 0 011.414 0z"
+                          clip-rule="evenodd" />
+                      </svg>
+                      <div>
+                        <span class="text-gray-700 dark:text-neutral-200">{{client.transferTxCurrent |
+                          bytes}}/s</span>
+                        <!-- Total TX -->
+                        <br><span class="font-regular" style="font-size:0.85em">{{bytes(client.transferTx)}}</span>
+                       
+  
+                      </div>
+                    </span>
+  
+                  </div>
+                 
+                  <!-- Transfer RX -->
+                  <div class="min-w-20 md:min-w-24" v-if="client.transferRx">
+                    <span class="flex gap-1" :title="$t('totalUpload') + bytes(client.transferRx)">
+  
+                      <svg class="align-middle h-3 inline mt-0.5" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                          d="M3.293 9.707a1 1 0 010-1.414l6-6a1 1 0 011.414 0l6 6a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L4.707 9.707a1 1 0 01-1.414 0z"
+                          clip-rule="evenodd" />
+                      </svg>
+                      <div>
+                        <span class="text-gray-700 dark:text-neutral-200">{{client.transferRxCurrent |
+                          bytes}}/s</span>
+                        <!-- Total RX -->
+                        <br><span class="font-regular" style="font-size:0.85em">{{bytes(client.transferRx)}}</span>
+                      </div>
+                    </span>
+                  </div>
+  
+                </div>
                   <div class="text-gray-400 dark:text-neutral-400 flex gap-1 items-center justify-between">
+                    <!-- Show Remaining Data -->
+<div v-if="client.enabled === true" title="نمایش ترافیک"
+class="inline-block align-middle rounded-full w-10 h-6 mr-1 material-background--tertiary cursor-pointer transition-all">
+<div class="rounded-full w-4 h-4 m-1 ml-5 bg-white"></div>
+</div>
+
+<div  v-if="client.enabled === false" :title="$t('enableClient')"
+class="inline-block align-middle rounded-full w-10 h-6 mr-1 bg-gray-200 dark:bg-neutral-400 cursor-pointer hover:bg-gray-300 dark:hover:bg-neutral-500 transition-all">
+
+<div class="rounded-full w-4 h-4 m-1 bg-white"></div>
+</div>
+
+<!-- Edit -->
+<button @click="clientEdit = true; clientEditId = client.id; clientEditName = client.name; clientEditDays = client.remainingDays; clientEditDataLimit =client.terrafic - client.dataUsage;"
+        class="align-middle material-basic--secondary p-2 rounded transition" title="ویرایش کاربر">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M3 17.46v3.04c0 .28.22.5.5.5h3.04c.13 0 .26-.05.35-.15L17.81 9.94l-3.75-3.75L3.15 17.1q-.15.15-.15.36M20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83l3.75 3.75z"/>
+    </svg>
+</button>
+
+
+<!-- Reset -->
+<button @click="resetClientTraffic(client)" class="align-middle material-basic--secondary p-2 rounded transition"
+title="Reset Traffic" >
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M20 8c-1.403-2.96-4.463-5-8-5a9 9 0 1 0 0 18a9 9 0 0 0 9-9m0-9v6h-6"/></svg>
+</button>
+
+<!-- Link -->
+<button @click="linkToClientDetails(client)" class="align-middle material-basic--secondary p-2 rounded transition"
+title="Link to Client">
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path fill="currentColor" fill-rule="evenodd" d="M12.586 4.586a2 2 0 1 1 2.828 2.828l-3 3a2 2 0 0 1-2.828 0a1 1 0 0 0-1.414 1.414a4 4 0 0 0 5.656 0l3-3a4 4 0 0 0-5.656-5.656l-1.5 1.5a1 1 0 1 0 1.414 1.414zm-5 5a2 2 0 0 1 2.828 0a1 1 0 1 0 1.414-1.414a4 4 0 0 0-5.656 0l-3 3a4 4 0 1 0 5.656 5.656l1.5-1.5a1 1 0 1 0-1.414-1.414l-1.5 1.5a2 2 0 1 1-2.828-2.828z" clip-rule="evenodd"/></svg>
+</button>
+<!-- Button to link to client details -->
+<button @click="linkToClientDetails(client.id)" class="align-middle material-basic--secondary p-2 rounded transition" title="Link to Client">
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+    <path fill="currentColor" fill-rule="evenodd" d="M12.586 4.586a2 2 0 1 1 2.828 2.828l-3 3a2 2 0 0 1-2.828 0a1 1 0 0 0-1.414 1.414a4 4 0 0 0 5.656 0l3-3a4 4 0 0 0-5.656-5.656l-1.5 1.5a1 1 0 1 0 1.414 1.414zm-5 5a2 2 0 0 1 2.828 0a1 1 0 1 0 1.414-1.414a4 4 0 0 0-5.656 0l-3 3a4 4 0 1 0 5.656 5.656l1.5-1.5a1 1 0 1 0-1.414-1.414l-1.5 1.5a2 2 0 1 1-2.828-2.828z" clip-rule="evenodd" />
+  </svg>
+</button>
+
 
                     <!-- Enable/Disable -->
                     <div @click="disableClient(client)" v-if="client.enabled === true" title="Disable Client"
@@ -372,19 +531,19 @@
                     <!-- Show QR-->
 
                     <button :disabled="!client.downloadableConfig"
-                      class="align-middle material-basic--secondary p-2 rounded transition"
-                      :class="{
-                        'hover:bg-red-800 dark:hover:bg-red-800 hover:text-white dark:hover:text-white': client.downloadableConfig,
-                        'is-disabled': !client.downloadableConfig
-                      }"
-                      :title="!client.downloadableConfig ? $t('noPrivKey') : $t('showQR')"
-                      @click="qrcode = `./api/wireguard/client/${client.id}/qrcode.svg`">
-                      <svg class="w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
-                      </svg>
-                    </button>
+                    class="align-middle material-basic--secondary p-2 rounded transition"
+                    :class="{
+                      'hover:bg-red-800 dark:hover:bg-red-800 hover:text-white dark:hover:text-white': client.downloadableConfig,
+                      'is-disabled': !client.downloadableConfig
+                    }"
+                    :title="!client.downloadableConfig ? $t('noPrivKey') : $t('showQR')"
+                    @click="qrcode = `./api/wireguard/client/${client.id}/qrcode.svg`; clientDays = client">
+                    <svg class="w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                    </svg>
+                  </button>
 
                     <!-- Download Config -->
                     <a :disabled="!client.downloadableConfig"
@@ -424,7 +583,7 @@
             <div v-if="clients && clients.length === 0">
               <p class="text-center m-10 text-gray-400 dark:text-neutral-400 text-sm">
                 {{$t("noClients")}}<br /><br />
-                <button @click="clientCreate = true; clientCreateName = '';"
+                <button @click="clientCreate = true; clientCreateName = ''; clientDays = 0; clientDataLimit = 0;"
                   class="material-button material-button--filled-primary border-2 border-none py-2 px-4 inline-flex items-center transition">
                   <svg class="w-4 mr-2" inline xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
@@ -458,13 +617,18 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
+              <h1 v-if="clientDays.name" class="mt-4 custom-container text-2xl font-medium bg-blue-200 rtl border-1 border border-blue-500  text-center rounded-full">
+                <span class="text-3xl">{{ clientDays.name }}</span> - 
+                <span class="text-3xl">{{ clientDays.days }} </span> - 
+                <span class="text-3xl">{{ clientDays.dataLimit }} </span>
+              </h1>
               <img :src="qrcode" />
             </div>
           </div>
         </div>
 
         <!-- Create Dialog -->
-        <div v-if="clientCreate" class="fixed z-10 inset-0 overflow-y-auto">
+        <div v-if="clientCreate " class="fixed z-10 inset-0 overflow-y-auto">
           <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <!--
         Background overlay, show/hide based on modal state.
@@ -507,7 +671,7 @@
                   </div>
                   <div class="flex-grow mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                     <h3 class="text-lg leading-6 font-medium" id="modal-headline">
-                      New Client
+                      کاربر جدید 
                     </h3>
                     <div class="mt-2">
                       <p class="text-sm text-gray-500">
@@ -517,14 +681,16 @@
 
                       </p>
                       <p class="text-sm text-gray-500 mt-2">
+                        <label>تعداد روز </label>
                         <input
                           class="rounded p-2 border-2 material-basic--tertiary material-outline outline-none w-full"
-                          type="text" v-model="clientDays" placeholder="تعداد روز" min="1" />
+                          type="number" v-model="clientDays" placeholder="تعداد روز" min="0" />
                       </p>
                       <p class="text-sm text-gray-500 mt-2">
+                        <label>مقدار حجم </label>
                         <input
                           class="rounded p-2 border-2 material-basic--tertiary material-outline outline-none w-full"
-                          type="text" v-model="clientDataLimit" placeholder="حجم داده (گیگابایت)" min="1" />
+                          type="number" v-model="clientDataLimit" placeholder="حجم داده (گیگابایت)" min="0" />
                       </p>
                     </div>
                   </div>
@@ -616,6 +782,62 @@
             </div>
           </div>
         </div>
+
+        <div v-if="clientEdit" class="fixed z-10 inset-0 overflow-y-auto">
+          <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+              <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                  <div class="absolute inset-0 bg-gray-500 dark:bg-black opacity-75 dark:opacity-50"></div>
+              </div>
+              <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+              <div class="inline-block align-bottom material-container material-container--tertiary text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+                  <div class="pb-4">
+                      <div class="sm:flex sm:items-start">
+                          <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full material-background--tertiary sm:mx-0 sm:h-10 sm:w-10">
+                              <svg class="h-6 w-6 text-white" inline xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                              </svg>
+                          </div>
+                          <div class="flex-grow mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                              <h3 class="text-lg leading-6 font-medium" id="modal-headline">
+                                  ویرایش کاربر 
+                              </h3>
+                              <p class="text-sm text-gray-500 mt-2">
+                                <label> نام </label>
+                                <input hidden class="rounded p-2 border-2 material-basic--tertiary material-outline outline-none w-full"
+                                       type="text" v-model="clientEditId" placeholder="تعداد روز" min="0" />
+                            </p>
+                              <div class="mt-2">
+                                  <p class="text-sm text-gray-500">
+                                      <input class="rounded p-2 border-2 material-basic--tertiary material-outline outline-none w-full"
+                                             type="text" v-model.trim="clientEditName" placeholder="Name" />
+                                  </p>
+                                  <p class="text-sm text-gray-500 mt-2">
+                                      <label> روز </label>
+                                      <input class="rounded p-2 border-2 material-basic--tertiary material-outline outline-none w-full"
+                                             type="number" v-model="clientEditDays" placeholder="تعداد روز" min="0" />
+                                  </p>
+                                  <p class="text-sm text-gray-500 mt-2">
+                                      <label> حجم </label>
+                                      <input class="rounded p-2 border-2 material-basic--tertiary material-outline outline-none w-full"
+                                             type="number" v-model="clientEditDataLimit" placeholder="حجم داده (گیگابایت)" min="0" />
+                                  </p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="sm:flex sm:flex-row-reverse">
+                      <button type="button" @click="updateClient(); clientEdit = false"
+                              class="w-full inline-flex justify-center border-2 border-transparent shadow-sm px-4 py-2 material-button material-basic--tertiary text-base font-medium sm:ml-3 sm:w-auto sm:text-sm">
+                          Update
+                      </button>
+                      <button type="button" @click="clientEdit = false"
+                              class="mt-3 w-full inline-flex justify-center border-2 border-transparent shadow-sm px-4 py-2 material-button material-basic--tertiary text-base font-medium sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                          Cancel
+                      </button>
+                  </div>
+              </div>
+          </div>
+      </div>
       </div>
 
       <div v-if="authenticated === false">
@@ -669,34 +891,22 @@
         </svg>
 
       </div>
+      <div id="inactiveClientsChart"></div>
 
     </div>
+    <div class="max-w-4xl mx-auto p-5">
+<!-- چارت دایره‌ای -->
 
+
+  </div>
+  </div>
     <p v-cloak class="text-center m-10 material-text--on-background text-xs"> <a class="hover:underline" target="_blank" 
         href="https://github.com/wg-easy/wg-easy">ایران وایرگارد</a>, ویرایش شده توسط <a target="_blank" class="hover:underline"
         href="https://dartegnian.com/?ref=wg-easy-m3">PASHA</a> © 2021-2024 توسط <a class="hover:underline" target="_blank"
         href="https://emilenijssen.nl/?ref=wg-easy">PASHA</a>  </p>
 
   </div>
-<script>
- export default {
-  methods: {
-    async checkClientsStatus() {
-      // کد مربوط به بررسی وضعیت کاربران
-      console.log('Checking clients status...');
-      // اینجا باید کد مربوط به بررسی وضعیت کاربران را قرار دهید
-    }
-  },
-  
-  mounted() {
-    // هر ۱۲ ساعت یک‌بار بررسی می‌کند
-    setInterval(async () => {
-      await this.checkClientsStatus();
-    }, 1000 * 60 * 60 * 12);
-  }
-};
 
-</script>
   <script src="./js/vendor/vue.min.js"></script>
   <script src="./js/vendor/vue-i18n.min.js"></script>
   <script src="./js/vendor/apexcharts.min.js"></script>
@@ -707,5 +917,187 @@
   <script src="./js/i18n.js"></script>
   <script src="./js/app.js"></script>
 </body>
+<script>
 
+async function fetchClientStats() {
+    try {
+        const response = await fetch('/api/wireguard/client/stats');
+        if (!response.ok) {
+            throw new Error('خطا در دریافت آمار کاربران');
+        }
+
+        const stats = await response.json();
+    
+        const inactiveClients = stats.inactiveClientDetails.map(client => ({
+            name: client.name || 'نامی وجود ندارد',
+            dataUsage: client.dataUsage || 0,
+            remainingDays: client.remainingDays || 'اطلاعاتی وجود ندارد',
+        }));
+
+        const clientNames = inactiveClients.map(client => client.name);
+        const dataUsageData = inactiveClients.map(client => client.dataUsage);
+        const remainingDaysData = inactiveClients.map(client => client.remainingDays);
+        
+        // تنظیمات چارت کاربران غیرفعال
+        const inactiveClientsChartOptions = {
+            chart: {
+                type: 'bar',
+                height: 350,
+            },
+            series: [
+                {
+                    name: 'استفاده از دیتا (مگابایت)',
+                    data: dataUsageData,
+                },
+                {
+                    name: 'روزهای باقی‌مانده',
+                    data: remainingDaysData,
+                }
+            ],
+            xaxis: {
+                categories: clientNames,
+            },
+            title: {
+                text: 'نمودار ستونی کاربران غیرفعال',
+                align: 'center'
+            },
+            dataLabels: {
+                enabled: true,
+            },
+        };
+
+        const inactiveClientsChart = new ApexCharts(document.querySelector("#inactiveClientsChart"), inactiveClientsChartOptions);
+        inactiveClientsChart.render();
+
+        // تنظیمات چارت دایره‌ای
+        const pieChartOptions = {
+            chart: {
+                type: 'donut'
+            },
+            series: [stats.activeClients, stats.inactiveClients],
+            labels: [
+                `کاربران فعال (${stats.activeClients})`, 
+                `کاربران غیرفعال (${stats.inactiveClients})`
+            ],
+            title: {
+                text: `تعداد کل کاربران: ${stats.totalClients}`,
+            }
+        };
+        const pieChart = new ApexCharts(document.querySelector("#pieChart"), pieChartOptions);
+        pieChart.render();
+
+        // پاک کردن محتوای قبلی
+        const topClientsData = stats.topClients.map(client => ({
+            name: client.name || 'نامی وجود ندارد',
+            dataUsage: client.dataUsage || 0,
+            remainingDays: client.remainingDays || 'اطلاعاتی وجود ندارد',
+            days: client.days || 0,
+            terrafic: client.terrafic || 0,
+        }));
+
+        const barChartOptions = {
+            chart: {
+                type: 'bar',
+                stacked: false,
+                width: '100%',
+            },
+            series: [
+                {
+                    name: 'روزهای باقی‌مانده',
+                    data: topClientsData.map(client => client.remainingDays),
+                },
+                {
+                    name: 'روز',
+                    data: topClientsData.map(client => client.days),
+                },
+                {
+                    name: 'ترافیک مصرفی',
+                    data: topClientsData.map(client => client.dataUsage),
+                },
+                {
+                    name: 'ترافیک',
+                    data: topClientsData.map(client => client.terrafic),
+                }
+            ],
+            xaxis: {
+                categories: topClientsData.map(client => client.name),
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '70%',
+                    barHeight: '70%',
+                }
+            },
+            dataLabels: {
+                enabled: true,
+                formatter: function (val) {
+                    return val;
+                },
+                style: {
+                    fontSize: '12px',
+                    colors: ['#304758'],
+                },
+            },
+            title: {
+                text: 'مقایسه روزها و ترافیک کاربران',
+                align: 'center',
+                style: {
+                    fontSize: '16px',
+                    fontWeight: 'bold',
+                },
+            },
+            legend: {
+                position: 'bottom',
+            },
+            grid: {
+                borderColor: '#f1f1f1',
+            },
+            colors: ['#00E396', '#008FFB', '#FEB019', '#FF4560'],
+        };
+
+        const barChart = new ApexCharts(document.querySelector("#barChart"), barChartOptions);
+        barChart.render();
+
+   
+
+        const dataUsageChartOptions = {
+            chart: {
+                type: 'bar',
+                height: 350,
+            },
+            series: [{
+                name: 'مصرف داده (مگابایت)',
+                data: [
+                stats.usageStats.hourly/ 1000000, // تبدیل به مگابایت
+                stats.usageStats.daily / 1000000,
+                stats.usageStats.weekly / 1000000,
+                stats.usageStats.monthly / 1000000
+                ],
+            }],
+            xaxis: {
+                categories: ['ساعتی', 'روزانه', 'هفتگی', 'ماهانه'],
+            },
+            title: {
+                text: 'نمودار مصرف داده',
+                align: 'center',
+            },
+            dataLabels: {
+                enabled: true,
+            },
+            colors: ['#008FFB'],
+        };
+
+        const dataUsageChart = new ApexCharts(document.querySelector("#dataUsageChart"), dataUsageChartOptions);
+        dataUsageChart.render();
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+window.onload = fetchClientStats;
+
+
+  </script>
 </html>
